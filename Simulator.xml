@@ -21,7 +21,7 @@
          <DisplayConfig>
             <columns>20</columns>
             <rows>4</rows>
-            <bkColor>0xc1fa9d</bkColor>
+            <bkColor>0x8080ff</bkColor>
             <size>2</size>
          </DisplayConfig>
          <PortMapping>
