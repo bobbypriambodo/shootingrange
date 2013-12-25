@@ -238,6 +238,8 @@ ext_int2:	;shoot button
 	push r16
 	in r16,sreg
 	push r16
+	cpi shot,1
+	breq isr_exit
 	ldi shot,1
 	mov bullet_pos,position
 	inc bullet_pos
