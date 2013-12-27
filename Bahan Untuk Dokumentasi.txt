@@ -1,0 +1,51 @@
+Coba nanti liat juga ya di pdf Proyek_Akhir_Rev1, siapa tau ada yang kurang-kurang bisa ditambahin.
+
+Yang harus ada di dokumentasi
+
+1. Judul, nomor kelompok, anggota kelompok (nama dan NPM)
+Judul: Shooting Range
+Nomor: B8
+Anggota:
+Muhammad Ardhan Fadlurrahman
+Tondhy Eko Pramudya
+Widyanto Bagus Priambodo 1206208315
+Yosua Lijanto Binar
+
+2. Deskripsi Umum Proyek
+Coti-cotiin lah ya :D
+
+3. Cara menjalankan program beserta screenshot dari tiap langkahnya
+a. Splash Screen (pas awal yang ada judul)
+b. Kondisi awal pas baru mulai
+c. Kondisi berubah posisi
+d. Kondisi menembak
+e. Kondisi game over
+
+4. Penjelasan mengenai input, output, interrupt, dan timer
+input: button
+output: LCD
+interrupt:
+1. External Interrupt 0 (Port D bit 2) digunakan untuk tombol up
+2. External Interrupt 1 (Port D bit 3) digunakan untuk tombol down
+3. External Interrupt 2 (Port E bit 0) digunakan untuk tombol shoot
+timer:
+Pakenya Timer 0 Overflow Interrupt, digunakan untuk menggerakkan peluru. Jadi setiap timernya overflow, program akan menjalankan peluru satu langkah ke depan dan mengecek collision dengan target atau out of bounds.
+
+Subroutine
+
+ext_int0:
+ISR yang dipanggil ketika tombol up ditekan. Pertama dia akan ngecek apakah player ada di pos1 (paling atas). Kalau ya, maka langsung exit, tapi kalo enggak, dia akan manggil subroutine move_up yang tugasnya adalah memindahkan player satu tingkat ke atasnya.
+
+ext_int1:
+mirip seperti ext_int0, hanya saja kali ini untuk gerak player ke bawah.
+
+ext_int2:
+ISR yang dipanggil ketika tombol shoot ditekan. ISR ini mengubah nilai register flag 'shot' menjadi 1 (artinya sedang menembak) dan memasukkan posisi peluru awal (posisi player + 1, di depan player) ke register bullet_pos.
+
+isr_tov0:
+ISR yang dipanggil setiap terjadi overflow timer. Awalnya dia akan mengecek apakah flag 'shot' bernilai 0. Jika ya, maka jangan lakukan apa-apa. Jika 'shot' bernilai 1, cek apakah terjadi collision antara peluru dan target dengan memanggil subroutine check_collision. Setelah itu dicek lagi apakah shot masih 1 atau sudah 0 (terjadi collision). Kalau 1, gerakkan peluru. Kalau tidak, kembali.
+
+Penjelasan lebih lanjutnya ada di comment programnya sih ._.
+
+5. Masalah dalam implementasi
+Sebenernya tuh program kita masih ngebug kalo seandainya kita udah nge-run sekali, selesai kita stop, terus kita build and run lagi. Dia pasti akan ngebaca masih ada interrupt, gue bingung ngebenerinnya gimana ._. Terserah ini mau dimasukin atau enggak hehe.
